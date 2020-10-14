@@ -1,6 +1,6 @@
 
 const express = require('express');
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const app = express();
 const { animals } = require('./data/animals');
 
@@ -49,7 +49,7 @@ app.listen(PORT, () => {
   function findById(id, animalsArray) {
     const result = animalsArray.filter(animal => animal.id === id)[0];
     return result;
-  }
+  };
 
 app.get('/api/animals', (req, res) => {
   let results = animals;
@@ -61,5 +61,9 @@ app.get('/api/animals', (req, res) => {
 
 app.get('/api/animals/:id', (req, res) => {
   const result = findById(req.params.id, animals);
+  if (result) {
     res.json(result);
+  } else {
+    res.send(404);
+  }
 });
